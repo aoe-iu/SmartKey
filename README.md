@@ -27,10 +27,10 @@ Token刷新一次即可
 
 勾选AutoOpen，打开App会自动调用一次开门
 
-<img src="\screenshot\1.png" style="zoom:25%;" />
+![image](https://github.com/aoe-iu/SmarKey/blob/master/screenshot/1.png)
 
 
 
 增加快捷图块
 
-<img src="\screenshot\2.png" style="zoom:25%;" />
+![image](https://github.com/aoe-iu/SmarKey/blob/master/screenshot/2.png)
