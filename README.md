@@ -1,4 +1,4 @@
-# SmarKey
+# SmartKey
 “平x安x门x禁”替代品，需要自行抓包替换该参数
 
 ```
