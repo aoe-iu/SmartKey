@@ -13,7 +13,12 @@
     <string name="make_qr_code">MakeQRCode</string>
     <string name="qr_code_error">无法成功获取二维码</string>
     <string name="action_refresh_token">RefreshToken</string>
+    <string name="action_input_unionId">InputUnionId</string>
     <string name="auto_open">AutoOpen</string>
     <string name="others">others</string>
     <string name="house_address">HouseAddress:</string>
+    <string name="settings_title">Settings</string>
+    <string name="please_input_unionid">请输入UnionId</string>
+    <string name="confirm">确定</string>
+    <string name="unionId_error">unionId有误</string>
 </resources>

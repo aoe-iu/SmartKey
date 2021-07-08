@@ -25,6 +25,7 @@
         android:id="@+id/loading_pb"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="36dp"
+        android:visibility="invisible"
         android:layout_height="36dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="88dp" />

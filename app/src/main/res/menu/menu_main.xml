@@ -3,6 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.mmc.smartkey.ui.MainActivity">
     <item
+        android:id="@+id/inputUnionId"
+        android:icon="@drawable/ic_input_24"
+        android:orderInCategory="1"
+        android:title="@string/action_input_unionId"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/refreshToken"
         android:icon="@drawable/ic_sync_24"
         android:orderInCategory="1"

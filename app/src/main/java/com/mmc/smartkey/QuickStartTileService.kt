@@ -24,7 +24,7 @@ class QuickStartTileService : TileService() {
     override fun onClick() {
         super.onClick()
         Log.d(TAG, "onClick state = ${qsTile.state}")
-        if (App.token.isEmpty()) {
+        if (App.token.isEmpty() || App.unionId.isEmpty()) {
             qsTile.state = Tile.STATE_INACTIVE
         } else {
             qsTile.state = Tile.STATE_ACTIVE

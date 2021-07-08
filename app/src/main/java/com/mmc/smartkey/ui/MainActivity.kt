@@ -1,7 +1,9 @@
 package com.mmc.smartkey.ui
 
 
+import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 
 import android.view.Menu
 import android.view.MenuItem
@@ -19,7 +21,8 @@ import com.mmc.smartkey.network.KeyConfig
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-//    val viewModel by lazy { ViewModelProvider(this).get(MainActivityViewModel::class.java) }
+
+    //    val viewModel by lazy { ViewModelProvider(this).get(MainActivityViewModel::class.java) }
     private val viewModel by viewModels<MainActivityViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         initListener()
         initObserve()
-        if (App.token.isEmpty()) {
+        if (App.token.isEmpty() && App.unionId.isNotEmpty()) {
             refreshToken()
         } else {
             if (KeyConfig.getInstance(applicationContext)
@@ -48,7 +51,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun openDoor() {
         if (App.token.isEmpty()) {
-            Toast.makeText(this, "please refresh token first!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "please refresh token or input unionID", Toast.LENGTH_SHORT).show()
             return
         }
         binding.loadingPb.show()
@@ -111,6 +114,10 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         return when (item.itemId) {
+            R.id.inputUnionId -> {
+                startActivity(Intent(this, InputUnionIdActivity::class.java))
+                true
+            }
             R.id.refreshToken -> {
                 refreshToken()
                 true
