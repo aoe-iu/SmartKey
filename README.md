@@ -1,11 +1,8 @@
 # SmartKey
-“平x安x门x禁”替代品，需要自行抓包替换该参数
+“平x安x门x禁”替代品，需要自行抓包输入该参数
 
-```
-App#unionId
-```
 
-可使用PC版微信小程序抓包,
+使用PC版微信小程序抓包,输入encryptionUnionid
 
 ```
 request:
@@ -13,13 +10,11 @@ request:
 
 response:
 	"data": {
-		"encryptionUnionid": "xxxx",
-		"unionid": "xxx"
+		"encryptionUnionid": "xxxx",(使用这个参数)
+		"unionid": "xxx"(这个是未加密的，不能用)
 	}
 
 ```
-
-使用“encryptionUnionid”替换“App#unionId”
 
 ![image](https://github.com/aoe-iu/SmarKey/blob/master/screenshot/p3.png)
 
