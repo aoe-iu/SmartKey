@@ -20,6 +20,7 @@ response:
 ```
 
 使用“encryptionUnionid”替换“App#unionId”
+
 ![image](https://github.com/aoe-iu/SmarKey/blob/master/screenshot/p3.png)
 
 
