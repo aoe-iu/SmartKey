@@ -14,6 +14,17 @@ class InputUnionIdActivity : AppCompatActivity() {
     private lateinit var binding: ActivityInputUnionIdBinding
     private val viewModel by viewModels<InputViewModel>()
 
+    private  val tips = """使用PC版微信小程序抓包,输入encryptionUnionid
+        request:
+            /service/system/user/getUnionidByCode/v2/****
+
+        response:
+	        "data": {
+		        "encryptionUnionid": "***",(使用这个参数)
+		        "unionid": "***"(这个是未加密的，不能用)
+	            }
+    """
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initView()
@@ -49,15 +60,12 @@ class InputUnionIdActivity : AppCompatActivity() {
         })
     }
 
-    private fun clickConfirm() {
-
-    }
-
     private fun initView() {
         binding = ActivityInputUnionIdBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
         binding.toolbar.setNavigationIcon(R.drawable.ic_baseline_navigate_before_24)
         binding.TextInputEditText.setText(KeyConfig.getInstance(this).getUnionId())
+        binding.tips.text = tips
     }
 }

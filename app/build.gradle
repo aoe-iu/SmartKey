@@ -3,6 +3,20 @@ plugins {
     id 'kotlin-android'
 }
 
+def keyProps = new Properties()
+def keyPropsFile = rootProject.file('keystore/keystore.properties')
+if (keyPropsFile.exists()) {
+    keyProps.load(new FileInputStream(keyPropsFile))
+}
+
+// 读取version.properties
+def versionProps = new Properties()
+def versionPropsFile = rootProject.file('version.properties')
+if (versionPropsFile.exists()) {
+    versionProps.load(new FileInputStream(versionPropsFile))
+}
+
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
@@ -11,20 +25,38 @@ android {
         applicationId "com.mmc.smartkey"
         minSdkVersion 24
         targetSdkVersion 30
-        versionCode 2430104
-        versionName "1.0.4"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        versionCode versionProps['versionCode'].toInteger()
+        versionName versionProps['versionName']
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
 
     viewBinding {
         enabled = true
     }
 
+    signingConfigs {
+        release {
+            keyAlias keyProps['keyAlias']
+            keyPassword keyProps['keyPassword']
+            storeFile keyProps['storeFile'] ? file(keyProps['storeFile']) : null
+            storePassword keyProps['storePassword']
+        }
+        debug {
+            keyAlias keyProps['keyAlias']
+            keyPassword keyProps['keyPassword']
+            storeFile keyProps['storeFile'] ? file(keyProps['storeFile']) : null
+            storePassword keyProps['storePassword']
+        }
+    }
+
     buildTypes {
         release {
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        debug{
+            signingConfig signingConfigs.debug
         }
     }
     compileOptions {
@@ -34,6 +66,46 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+}
+
+
+task upgradeVersion {
+    group 'help'
+    description '构建新版本'
+    doLast {
+        println("---自动升级版本号---\n")
+        String oldVersionCode = versionProps['versionCode']
+        String oldVersionName = versionProps['versionName']
+        if (oldVersionCode == null || oldVersionName == null ||
+                oldVersionCode.isEmpty() || oldVersionName.isEmpty()) {
+            println("error:版本号不能为空")
+            return;
+        }
+        versionProps['versionCode'] = String.valueOf(versionProps['versionCode'].toInteger() + 1)
+        String str = versionProps['versionName'].toString()
+        versionProps['versionName'] = str.substring(0, str.lastIndexOf('.') + 1) +
+                (str.substring(str.lastIndexOf('.') + 1).toInteger() + 1)
+        String tip =
+                "版本号从$oldVersionName($oldVersionCode)升级到${versionProps['versionName']}(${versionProps['versionCode']})"
+        println(tip)
+
+        def writer = new FileWriter(versionPropsFile)
+        versionProps.store(writer, null)
+        writer.flush()
+        writer.close()
+        def tag = "v${versionProps['versionName']}"
+        cmdExecute("git pull")
+        cmdExecute("git add version.properties")
+        cmdExecute("git commit -m \"版本号升级为：$tag\"")
+        cmdExecute("git push origin")
+        cmdExecute("git tag $tag")
+        cmdExecute("git push origin $tag")
+    }
+}
+
+void cmdExecute(String cmd) {
+    println "\n执行$cmd"
+    println cmd.execute().text
 }
 
 dependencies {
