@@ -6,7 +6,8 @@ import com.mmc.smartkey.network.KeyConfig
 class App : Application() {
 
     companion object {
-        const val unionId = "xxxxx" //change to your own id
+//        const val unionId = "xxxxx" //change to your own id
+        var unionId = ""
         var houseId = ""
         var userId = ""
         var token = ""

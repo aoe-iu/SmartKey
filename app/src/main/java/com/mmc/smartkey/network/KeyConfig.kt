@@ -6,6 +6,7 @@ import androidx.core.content.edit
 
 private const val USER_PREFERENCES_NAME = "user_preferences"
 private const val KEY_TOKEN = "key_token"
+private const val KEY_UNIONID = "key_unionId"
 private const val KEY_USER_ID = "key_user_id"
 private const val KEY_HOUSE_ID = "key_house_id"
 private const val KEY_AUTO_OPEN = "key_auto_open"
@@ -29,6 +30,18 @@ class KeyConfig private constructor(context: Context) {
     fun getToken(): String? {
         return sharedPreferences.getString(KEY_TOKEN, null)
     }
+
+    fun updateUnionId(unionId: String) {
+        sharedPreferences.edit {
+            putString(KEY_UNIONID, unionId)
+        }
+    }
+
+    fun getUnionId(): String? {
+        return sharedPreferences.getString(KEY_UNIONID, null)
+    }
+
+
     fun updateUserID(userID: String) {
         sharedPreferences.edit {
             putString(KEY_USER_ID, userID)
