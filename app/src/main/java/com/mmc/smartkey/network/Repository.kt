@@ -26,7 +26,7 @@ object Repository {
     }
 
     fun quickOpenDoor(keyParams: KeyParams) {
-        GlobalScope.launch(Dispatchers.IO) {
+        CoroutineScope(Dispatchers.IO).launch {
             val openDoorResponse = SmartKeyNetwork.openDoor(keyParams)
             withContext(Dispatchers.Main) {
                 if (openDoorResponse.status == 1) {
@@ -67,26 +67,24 @@ object Repository {
     }
 
     fun refreshToken(unionId: String) = fire(Dispatchers.IO) {
-        coroutineScope {
-            val tokenResult = SmartKeyNetwork.getToken(unionId)
-            if (tokenResult.status == 1) {
-                val houseIdResult =
-                    SmartKeyNetwork.getHouseID(HouseIDParams(tokenResult.data.peopleId))
-                if (houseIdResult.status == 1 && houseIdResult.dataResult.isNotEmpty()) {
-                    Result.success(
-                        RefreshResult(
-                            houseIdResult.dataResult[0].houseHostId,
-                            tokenResult.data.peopleId,
-                            tokenResult.data.token,
-                            houseIdResult.dataResult[0].houseAddress
-                        )
+        val tokenResult = SmartKeyNetwork.getToken(unionId)
+        if (tokenResult.status == 1) {
+            val houseIdResult =
+                SmartKeyNetwork.getHouseID(HouseIDParams(tokenResult.data.peopleId))
+            if (houseIdResult.status == 1 && houseIdResult.dataResult.isNotEmpty()) {
+                Result.success(
+                    RefreshResult(
+                        houseIdResult.dataResult[0].houseHostId,
+                        tokenResult.data.peopleId,
+                        tokenResult.data.token,
+                        houseIdResult.dataResult[0].houseAddress
                     )
-                } else {
-                    Result.failure(RuntimeException("response message is ${houseIdResult.message}"))
-                }
+                )
             } else {
-                Result.failure(RuntimeException("response message is ${tokenResult.message}"))
+                Result.failure(RuntimeException("response message is ${houseIdResult.message}"))
             }
+        } else {
+            Result.failure(RuntimeException("response message is ${tokenResult.message}"))
         }
     }
 
