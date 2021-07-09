@@ -15,16 +15,9 @@ class InputUnionIdActivity : AppCompatActivity() {
     private val viewModel by viewModels<InputViewModel>()
 
     private  val tips = """使用PC版微信小程序抓包,输入unionid
-        request:
-            /service/system/user/getUnionidByCode/v2/****
-
-        response:
-	        "data": {
-		        "encryptionUnionid": "***",(使用这个参数)
-		        "unionid": "***"(这个是未加密的，不能用)
-	            }
-
-    或  host/service/system/user/getToken/xxx
+        
+        url: aaa.com/service/system/user/getToken/xxx
+        
         xxx就是所需unionid
     """
 

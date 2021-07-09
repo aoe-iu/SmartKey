@@ -7,20 +7,6 @@
 使用PC版微信小程序抓包,输入unionid
 
 ```
-request:
-host/service/system/user/getUnionidByCode/v2/xxxxxxxxx
-
-response:
-	"data": {
-		"encryptionUnionid": "xxxx",(使用这个参数)
-		"unionid": "xxx"(这个是未加密的，不能用)
-	}
-
-```
-
-或 
-
-```
 host/service/system/user/getToken/xxx
 xxx就是所需unionid
 ```
