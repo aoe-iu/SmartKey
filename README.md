@@ -4,11 +4,11 @@
 - 方便快捷，点一下app图标或快捷图块就可以开门，比先打开小程序再点击开门快多了
 - 官方版绑定微信，只能一人一号，使用此app可以一号多台手机用，理论上一家n口只需注册一个账号即可
 
-使用PC版微信小程序抓包,输入encryptionUnionid
+使用PC版微信小程序抓包,输入unionid
 
 ```
 request:
-/service/system/user/getUnionidByCode/v2/xxxxxxxxx
+host/service/system/user/getUnionidByCode/v2/xxxxxxxxx
 
 response:
 	"data": {
@@ -17,6 +17,15 @@ response:
 	}
 
 ```
+
+或 
+
+```
+host/service/system/user/getToken/xxx
+xxx就是所需unionid
+```
+
+
 
 ![image](https://github.com/aoe-iu/SmarKey/blob/master/screenshot/p3.png)
 

@@ -14,7 +14,7 @@ class InputUnionIdActivity : AppCompatActivity() {
     private lateinit var binding: ActivityInputUnionIdBinding
     private val viewModel by viewModels<InputViewModel>()
 
-    private  val tips = """使用PC版微信小程序抓包,输入encryptionUnionid
+    private  val tips = """使用PC版微信小程序抓包,输入unionid
         request:
             /service/system/user/getUnionidByCode/v2/****
 
@@ -23,6 +23,9 @@ class InputUnionIdActivity : AppCompatActivity() {
 		        "encryptionUnionid": "***",(使用这个参数)
 		        "unionid": "***"(这个是未加密的，不能用)
 	            }
+
+    或  host/service/system/user/getToken/xxx
+        xxx就是所需unionid
     """
 
     override fun onCreate(savedInstanceState: Bundle?) {
