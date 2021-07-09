@@ -18,6 +18,8 @@ class App : Application() {
         val token = KeyConfig.getInstance(this).getToken()
         val houseId = KeyConfig.getInstance(this).getHouseID()
         val userId = KeyConfig.getInstance(this).getUserID()
+        val unionId = KeyConfig.getInstance(this).getUnionId()
+        if (unionId != null) App.unionId = unionId
         if (token != null) App.token = token
         if (houseId != null) App.houseId = houseId
         if (userId != null) App.userId = userId
