@@ -27,6 +27,7 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
+        ref: dev
     # 获取打包秘钥
     - name: Checkout Android Keystore
       uses: actions/checkout@v2
