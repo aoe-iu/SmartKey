@@ -14,7 +14,7 @@ import kotlin.coroutines.CoroutineContext
 object Repository {
     private val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINESE)
     fun getQRCodeParams(): QRCodeParams {
-        val calendar = Calendar.getInstance();
+        val calendar = Calendar.getInstance()
         val startTime = simpleDateFormat.format(calendar.time)
         calendar.add(Calendar.MINUTE, 10)
         val endTime = simpleDateFormat.format(calendar.time)

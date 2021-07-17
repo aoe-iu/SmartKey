@@ -25,12 +25,21 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <androidx.core.widget.ContentLoadingProgressBar
+        android:id="@+id/loading_pb"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:visibility="invisible"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="12dp"/>
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/TextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="18dp"
         android:layout_marginEnd="36dp"
         app:boxStrokeWidth="0dp"
         app:endIconMode="password_toggle">

@@ -33,6 +33,7 @@ class InputUnionIdActivity : AppCompatActivity() {
             val unionId = binding.TextInputEditText.text?.trim().toString()
             if (unionId.isNotEmpty()) {
                 binding.confirmButton.isEnabled = false
+                binding.loadingPb.show()
                 viewModel.getToken(unionId)
             }
         }
@@ -53,6 +54,7 @@ class InputUnionIdActivity : AppCompatActivity() {
                 binding.TextInputEditText.requestFocus()
             }
             binding.confirmButton.isEnabled = true
+            binding.loadingPb.hide()
         })
     }
 
@@ -63,5 +65,6 @@ class InputUnionIdActivity : AppCompatActivity() {
         binding.toolbar.setNavigationIcon(R.drawable.ic_baseline_navigate_before_24)
         binding.TextInputEditText.setText(KeyConfig.getInstance(this).getUnionId())
         binding.tips.text = tips
+        binding.loadingPb.hide()
     }
 }

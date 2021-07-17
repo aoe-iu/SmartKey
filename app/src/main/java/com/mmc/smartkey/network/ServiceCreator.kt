@@ -26,7 +26,7 @@ object ServiceCreator {
         .addInterceptor(LoggingInterceptor)
 
     private val retrofit = Retrofit.Builder()
-        .client(okHttpClientBuilder.build())
+//        .client(okHttpClientBuilder.build())
         .baseUrl(BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .build()

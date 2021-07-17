@@ -20,5 +20,5 @@
     <string name="settings_title">Settings</string>
     <string name="please_input_unionid">请输入UnionId</string>
     <string name="confirm">确定</string>
-    <string name="unionId_error">unionId有误</string>
+    <string name="unionId_error">get unionId error</string>
 </resources>
