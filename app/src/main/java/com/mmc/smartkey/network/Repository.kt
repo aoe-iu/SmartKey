@@ -39,7 +39,7 @@ object Repository {
 
     }
 
-    fun openDoor(keyParams: KeyParams) = fire(Dispatchers.IO) {
+    fun openDoor(keyParams: KeyParams) = fire {
         val openDoorResponse = SmartKeyNetwork.openDoor(keyParams)
         if (openDoorResponse.status == 1) {
             Result.success(openDoorResponse.message)
@@ -48,7 +48,7 @@ object Repository {
         }
     }
 
-    fun makeQRCode(qrCodeParams: QRCodeParams) = fire(Dispatchers.IO) {
+    fun makeQRCode(qrCodeParams: QRCodeParams) = fire {
         val qrCodeResult = SmartKeyNetwork.makeQRCode(qrCodeParams)
         if (qrCodeResult.result == 1) {
             Result.success(qrCodeResult.data)
@@ -57,7 +57,7 @@ object Repository {
         }
     }
 
-    fun getToken(unionId: String) = fire(Dispatchers.IO) {
+    fun getToken(unionId: String) = fire {
         val tokenResult = SmartKeyNetwork.getToken(unionId)
         if (tokenResult.status == 1) {
             Result.success(tokenResult.data)
@@ -66,7 +66,7 @@ object Repository {
         }
     }
 
-    fun refreshToken(unionId: String) = fire(Dispatchers.IO) {
+    fun refreshToken(unionId: String) = fire {
         val tokenResult = SmartKeyNetwork.getToken(unionId)
         if (tokenResult.status == 1) {
             val houseIdResult =
@@ -89,8 +89,8 @@ object Repository {
     }
 
 
-    private fun <T> fire(context: CoroutineContext, block: suspend () -> Result<T>) =
-        liveData(context) {
+    private fun <T> fire(block: suspend () -> Result<T>) =
+        liveData(Dispatchers.IO) {
             val result = try {
                 block()
             } catch (e: Exception) {
