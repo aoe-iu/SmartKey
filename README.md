@@ -29,7 +29,7 @@ Token刷新一次即可
 
 ![image](https://github.com/aoe-iu/SmarKey/blob/master/screenshot/p2.png)
 
-#FAQ
+# FAQ
 
 添加快捷开关后不可用或重启后不可用（灰色状态）？
 
