@@ -10,7 +10,6 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.mmc.smartkey.App
 import com.mmc.smartkey.R
 import com.mmc.smartkey.network.Repository
