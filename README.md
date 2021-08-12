@@ -28,3 +28,10 @@ Token刷新一次即可
 增加快捷图块
 
 ![image](https://github.com/aoe-iu/SmarKey/blob/master/screenshot/p2.png)
+
+FAQ
+
+添加快捷开关后不可用或重启后不可用（灰色状态）？
+
+目前发现在MIUI 部分机型上有这个问题，会导致快捷方式TileService失效（原生Android不会），暂时没有有效解决办法。
+有动手能力的可以尝试监听开机广播，启动服务
