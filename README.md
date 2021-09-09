@@ -7,7 +7,7 @@
 使用PC版微信小程序抓包,输入unionid
 
 ```
-host/service/system/user/getToken/xxx
+.../xhapp/service/system/user/getToken/xxx
 xxx就是所需unionid
 ```
 
