@@ -16,7 +16,7 @@ class InputUnionIdActivity : AppCompatActivity() {
 
     private  val tips = """使用PC版微信小程序抓包,输入unionid
         
-        url: aaa.com/service/system/user/getToken/xxx
+        url: aaa.com/xhapp/service/system/user/getToken/xxx
         
         xxx就是所需unionid
     """
