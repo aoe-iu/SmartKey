@@ -14,12 +14,4 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="Theme.SmartKey.NoActionBar" parent="Theme.SmartKey">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="Theme.SmartKey.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="Theme.SmartKey.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
