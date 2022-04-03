@@ -1,4 +1,4 @@
-name: Android CI
+name: Android manual
 
 # 触发器
 on:
