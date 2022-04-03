@@ -3,8 +3,6 @@ package com.mmc.smartkey.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.TextUtils
-
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -12,9 +10,9 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.mmc.smartkey.App
 import com.mmc.smartkey.R
-import com.mmc.smartkey.network.Repository
 import com.mmc.smartkey.databinding.ActivityMainBinding
 import com.mmc.smartkey.network.KeyConfig
+import com.mmc.smartkey.network.Repository
 
 
 class MainActivity : AppCompatActivity() {
@@ -31,6 +29,10 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         initListener()
         initObserve()
+    }
+
+    override fun onResume() {
+        super.onResume()
         if (App.token.isEmpty() && App.unionId.isNotEmpty()) {
             refreshToken()
         } else {
@@ -59,7 +61,7 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun initObserve() {
-        viewModel.tokenLiveData.observe(this, {
+        viewModel.tokenLiveData.observe(this) {
             val result = it.getOrNull()
             if (result != null) {
                 App.token = result.token
@@ -73,12 +75,12 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "error", Toast.LENGTH_SHORT).show()
             }
             binding.loadingPb.hide()
-        })
-        viewModel.openDoorLiveData.observe(this, {
+        }
+        viewModel.openDoorLiveData.observe(this) {
             val msg = it.getOrNull()
             Toast.makeText(this, msg ?: "error", Toast.LENGTH_SHORT).show()
             binding.loadingPb.hide()
-        })
+        }
         /* viewModel.qrLiveData.observe(this, {
              val qrCodeStr = it.getOrNull()
              if (qrCodeStr != null) {
