@@ -15,7 +15,7 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.SmartKey.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.SmartKey.AppBarOverlay" parent="ThemeOverlay.AppCompat.DayNight.ActionBar" />
 
     <style name="Theme.SmartKey.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Toolbar.Primary" />
 </resources>
