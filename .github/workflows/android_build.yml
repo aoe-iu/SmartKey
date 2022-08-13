@@ -34,6 +34,10 @@ jobs:
         repository: aoe-iu/keystore
         token: ${{ secrets.TOKEN }} # 连接仓库的token,需要单独配置
         path: keystore # 仓库的根目录名
+     # update sdk   
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v2
+
     # 打包release
     - name: Build with Gradle
       run: bash ./gradlew assembleRelease
