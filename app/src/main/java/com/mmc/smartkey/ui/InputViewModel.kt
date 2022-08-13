@@ -10,8 +10,8 @@ class InputViewModel : ViewModel() {
     private val _tokenLiveData = MutableLiveData<String>()
 
     val tokenLiveData = Transformations.switchMap(_tokenLiveData) { unionId ->
-//        Repository.getToken(unionId)
-        Repository.refreshToken(unionId)
+//        Repository.refreshToken(unionId)
+        Repository.refreshList(unionId)
     }
 
     fun getToken(unionId: String) {

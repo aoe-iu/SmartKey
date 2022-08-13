@@ -6,6 +6,6 @@ import retrofit2.Call
 import retrofit2.http.*
 
 interface GetHouseIdService {
-    @POST("iacs/info/host/people/findFreezeAndActiveAppNew?token=\${App.token}")
-    fun getHouseId(@Body params: HouseIDParams): Call<HouseIdResult>
+    @POST("iacs/info/host/people/findFreezeAndActiveAppNew")
+    fun getHouseId(@Query("token") token: String, @Body params: HouseIDParams): Call<HouseIdResult>
 }

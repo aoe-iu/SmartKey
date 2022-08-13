@@ -33,8 +33,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        if (App.token.isEmpty() && App.unionId.isNotEmpty()) {
-            refreshToken()
+        if (App.token.isEmpty()) {
+//            refreshToken()
+            Toast.makeText(this, "please input unionID", Toast.LENGTH_SHORT).show()
         } else {
             if (KeyConfig.getInstance(applicationContext)
                     .isAutoOpen()
@@ -52,7 +53,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun openDoor() {
         if (App.token.isEmpty()) {
-            Toast.makeText(this, "please refresh token or input unionID", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "please input unionID", Toast.LENGTH_SHORT).show()
             return
         }
         binding.loadingPb.show()
@@ -61,7 +62,7 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun initObserve() {
-        viewModel.tokenLiveData.observe(this) {
+/*        viewModel.tokenLiveData.observe(this) {
             val result = it.getOrNull()
             if (result != null) {
                 App.token = result.token
@@ -75,7 +76,7 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "error", Toast.LENGTH_SHORT).show()
             }
             binding.loadingPb.hide()
-        }
+        }*/
         viewModel.openDoorLiveData.observe(this) {
             val msg = it.getOrNull()
             Toast.makeText(this, msg ?: "error", Toast.LENGTH_SHORT).show()
@@ -117,10 +118,6 @@ class MainActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.inputUnionId -> {
                 startActivity(Intent(this, InputUnionIdActivity::class.java))
-                true
-            }
-            R.id.refreshToken -> {
-                refreshToken()
                 true
             }
             R.id.autoOpen -> {

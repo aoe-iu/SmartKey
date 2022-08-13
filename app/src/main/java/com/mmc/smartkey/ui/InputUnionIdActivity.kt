@@ -1,25 +1,23 @@
 package com.mmc.smartkey.ui
 
-import androidx.appcompat.app.AppCompatActivity
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.mmc.smartkey.App
-import com.mmc.smartkey.databinding.ActivityInputUnionIdBinding
 import com.mmc.smartkey.R
+import com.mmc.smartkey.databinding.ActivityInputUnionIdBinding
 import com.mmc.smartkey.network.KeyConfig
+import com.mmc.smartkey.network.model.RefreshListResult
 
 class InputUnionIdActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityInputUnionIdBinding
     private val viewModel by viewModels<InputViewModel>()
-
-    private  val tips = """使用PC版微信小程序抓包,输入unionid
-        
-        url: aaa.com/xhapp/service/system/user/getToken/xxx
-        
-        xxx就是所需unionid
-    """
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,32 +28,24 @@ class InputUnionIdActivity : AppCompatActivity() {
     private fun initListener() {
         binding.toolbar.setNavigationOnClickListener { onBackPressed() }
         binding.confirmButton.setOnClickListener {
-            val unionId = binding.TextInputEditText.text?.trim().toString()
+            val unionId = binding.textInputEditText.text?.trim().toString()
             if (unionId.isNotEmpty()) {
                 binding.confirmButton.isEnabled = false
                 binding.loadingPb.show()
                 viewModel.getToken(unionId)
             }
         }
-        viewModel.tokenLiveData.observe(this, {
+        viewModel.tokenLiveData.observe(this) {
             val result = it.getOrNull()
             if (result != null) {
-                App.token = result.token
-                App.houseId = result.houseHostId
-                App.userId = result.peopleId
-                App.unionId = binding.TextInputEditText.text?.trim().toString()
-                KeyConfig.getInstance(applicationContext).updateUnionId(App.unionId)
-                KeyConfig.getInstance(applicationContext).updateToken(result.token)
-                KeyConfig.getInstance(applicationContext).updateUserID(result.peopleId)
-                KeyConfig.getInstance(applicationContext).updateHouseID(result.houseHostId)
-                Toast.makeText(this, "refresh token success", Toast.LENGTH_SHORT).show()
+                showHouseListDialog(result)
             } else {
                 Toast.makeText(this, R.string.unionId_error, Toast.LENGTH_SHORT).show()
-                binding.TextInputEditText.requestFocus()
+                binding.textInputEditText.requestFocus()
             }
             binding.confirmButton.isEnabled = true
             binding.loadingPb.hide()
-        })
+        }
     }
 
     private fun initView() {
@@ -63,8 +53,25 @@ class InputUnionIdActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
         binding.toolbar.setNavigationIcon(R.drawable.ic_baseline_navigate_before_24)
-        binding.TextInputEditText.setText(KeyConfig.getInstance(this).getUnionId())
-        binding.tips.text = tips
+        binding.textInputEditText.setText(KeyConfig.getInstance(this).getUnionId())
         binding.loadingPb.hide()
+    }
+
+    @SuppressLint("CheckResult")
+    private fun showHouseListDialog(refreshListResult: RefreshListResult) {
+        val addressStrList = refreshListResult.dataResult.map { it.hostAddress }
+        MaterialDialog(this).show {
+            title(R.string.choose_address)
+            listItemsSingleChoice(items = addressStrList) { _, index, text ->
+                App.unionId = binding.textInputEditText.text?.trim().toString()
+                App.token = refreshListResult.token
+                App.userId = refreshListResult.peopleId
+                App.houseId = refreshListResult.dataResult[index].houseHostId
+                KeyConfig.getInstance(applicationContext).updateUnionId(App.unionId)
+                KeyConfig.getInstance(applicationContext).updateToken(App.token)
+                KeyConfig.getInstance(applicationContext).updateUserID(App.userId)
+                KeyConfig.getInstance(applicationContext).updateHouseID(App.houseId)
+            }
+        }
     }
 }

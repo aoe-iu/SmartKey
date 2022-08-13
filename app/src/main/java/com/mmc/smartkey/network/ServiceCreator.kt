@@ -9,7 +9,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 object ServiceCreator {
 
     private const val BASE_URL = "https://pabaspmj.szxhdz.com:18000/xhapp/service/"
-
     private val LoggingInterceptor =
         HttpLoggingInterceptor { Log.d("net", it) }.setLevel(
             HttpLoggingInterceptor.Level.BODY
@@ -26,7 +25,7 @@ object ServiceCreator {
         .addInterceptor(LoggingInterceptor)
 
     private val retrofit = Retrofit.Builder()
-//        .client(okHttpClientBuilder.build())
+        .client(okHttpClientBuilder.build())
         .baseUrl(BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .build()

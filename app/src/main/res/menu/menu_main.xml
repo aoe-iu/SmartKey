@@ -9,12 +9,6 @@
         android:title="@string/action_input_unionId"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/refreshToken"
-        android:icon="@drawable/ic_sync_24"
-        android:orderInCategory="1"
-        android:title="@string/action_refresh_token"
-        app:showAsAction="never" />
-    <item
         android:id="@+id/autoOpen"
         android:checkable="true"
         android:orderInCategory="2"

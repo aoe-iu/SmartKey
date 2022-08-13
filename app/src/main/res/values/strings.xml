@@ -13,4 +13,7 @@
     <string name="please_input_unionid">请输入UnionId</string>
     <string name="confirm">确定</string>
     <string name="unionId_error">unionId error!</string>
+    <string name="choose_address">选择一个地址</string>
+    <string name="input_tips">使用PC版微信小程序抓包,输入unionid\n\nurl: aaa.com/xhapp/service/system/user/getToken/xxx\n\nxxx就是所需unionid
+    </string>
 </resources>

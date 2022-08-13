@@ -2,6 +2,7 @@ package com.mmc.smartkey.network
 
 import androidx.lifecycle.liveData
 import com.mmc.smartkey.App
+import com.mmc.smartkey.network.model.RefreshListResult
 import com.mmc.smartkey.network.model.RefreshResult
 import com.mmc.smartkey.network.params.HouseIDParams
 import com.mmc.smartkey.network.params.KeyParams
@@ -27,7 +28,7 @@ object Repository {
 
     fun quickOpenDoor(keyParams: KeyParams) {
         CoroutineScope(Dispatchers.IO).launch {
-            val openDoorResponse = SmartKeyNetwork.openDoor(keyParams)
+            val openDoorResponse = SmartKeyNetwork.openDoor(App.token,keyParams)
             withContext(Dispatchers.Main) {
                 if (openDoorResponse.status == 1) {
                     Result.success(openDoorResponse.message)
@@ -40,7 +41,7 @@ object Repository {
     }
 
     fun openDoor(keyParams: KeyParams) = fire {
-        val openDoorResponse = SmartKeyNetwork.openDoor(keyParams)
+        val openDoorResponse = SmartKeyNetwork.openDoor(App.token, keyParams)
         if (openDoorResponse.status == 1) {
             Result.success(openDoorResponse.message)
         } else {
@@ -49,7 +50,7 @@ object Repository {
     }
 
     fun makeQRCode(qrCodeParams: QRCodeParams) = fire {
-        val qrCodeResult = SmartKeyNetwork.makeQRCode(qrCodeParams)
+        val qrCodeResult = SmartKeyNetwork.makeQRCode(App.token, qrCodeParams)
         if (qrCodeResult.result == 1) {
             Result.success(qrCodeResult.data)
         } else {
@@ -66,18 +67,46 @@ object Repository {
         }
     }
 
+    fun refreshList(unionId: String) = fire {
+        val tokenResult = SmartKeyNetwork.getToken(unionId)
+        if (tokenResult.status == 1) {
+            val houseIdResult =
+                SmartKeyNetwork.getHouseID(
+                    tokenResult.data.token,
+                    HouseIDParams(tokenResult.data.peopleId)
+                )
+            if (houseIdResult.status == 1 && houseIdResult.dataResult.isNotEmpty()) {
+                Result.success(
+                    RefreshListResult(
+                        tokenResult.data.peopleId,
+                        tokenResult.data.token,
+                        houseIdResult.dataResult
+                    )
+                )
+            } else {
+                Result.failure(RuntimeException("response message is ${houseIdResult.message}"))
+            }
+        } else {
+            Result.failure(RuntimeException("response message is ${tokenResult.message}"))
+        }
+    }
+
     fun refreshToken(unionId: String) = fire {
         val tokenResult = SmartKeyNetwork.getToken(unionId)
         if (tokenResult.status == 1) {
             val houseIdResult =
-                SmartKeyNetwork.getHouseID(HouseIDParams(tokenResult.data.peopleId))
+                SmartKeyNetwork.getHouseID(
+                    tokenResult.data.token,
+                    HouseIDParams(tokenResult.data.peopleId)
+                )
             if (houseIdResult.status == 1 && houseIdResult.dataResult.isNotEmpty()) {
+                val size = houseIdResult.dataResult.size
                 Result.success(
                     RefreshResult(
-                        houseIdResult.dataResult[0].houseHostId,
+                        houseIdResult.dataResult[size - 1].houseHostId,
                         tokenResult.data.peopleId,
                         tokenResult.data.token,
-                        houseIdResult.dataResult[0].houseAddress
+                        houseIdResult.dataResult[size - 1].houseAddress
                     )
                 )
             } else {

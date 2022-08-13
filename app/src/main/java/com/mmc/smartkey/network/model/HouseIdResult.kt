@@ -13,5 +13,6 @@ data class HouseIdResult(
 data class DataResult(
     val hostSn: String,
     val houseHostId: String,
+    val hostAddress: String,
     val houseAddress: String
 )

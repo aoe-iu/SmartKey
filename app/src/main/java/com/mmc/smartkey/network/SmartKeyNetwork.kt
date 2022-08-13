@@ -15,12 +15,12 @@ object SmartKeyNetwork {
 
     private val openDoorService = ServiceCreator.create(OpenDoorService::class.java)
 
-    suspend fun openDoor(keyParams: KeyParams) = openDoorService.openDoor(keyParams).await()
+    suspend fun openDoor(token: String,keyParams: KeyParams) = openDoorService.openDoor(token,keyParams).await()
 
     private val qrCodeService = ServiceCreator.create(QRCodeService::class.java)
 
-    suspend fun makeQRCode(qrCodeParams: QRCodeParams) =
-        qrCodeService.makeQRCode(qrCodeParams).await()
+    suspend fun makeQRCode(token: String,qrCodeParams: QRCodeParams) =
+        qrCodeService.makeQRCode(token,qrCodeParams).await()
 
     private val tokenService = ServiceCreator.create(GetTokenService::class.java)
 
@@ -28,8 +28,8 @@ object SmartKeyNetwork {
 
     private val houseIDService = ServiceCreator.create(GetHouseIdService::class.java)
 
-    suspend fun getHouseID(houseIDParams: HouseIDParams) =
-        houseIDService.getHouseId(houseIDParams).await()
+    suspend fun getHouseID(token: String, houseIDParams: HouseIDParams) =
+        houseIDService.getHouseId(token, houseIDParams).await()
 
     private suspend fun <T> Call<T>.await(): T {
         return suspendCoroutine { continuation ->

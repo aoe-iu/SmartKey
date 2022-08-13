@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".ui.InputUnionIdActivity">
 
 
@@ -12,7 +11,10 @@
         android:id="@+id/appbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/Theme.SmartKey.AppBarOverlay">
+        android:theme="@style/Theme.SmartKey.AppBarOverlay"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -25,14 +27,31 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+
     <androidx.core.widget.ContentLoadingProgressBar
         android:id="@+id/loading_pb"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="36dp"
         android:layout_height="36dp"
-        android:visibility="invisible"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="12dp"/>
+        android:layout_marginTop="12dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appbar_layout" />
+
+
+    <TextView
+        android:id="@+id/tips"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="36dp"
+        android:text="@string/input_tips"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appbar_layout" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/TextInputLayout"
@@ -42,17 +61,19 @@
         android:layout_marginTop="18dp"
         android:layout_marginEnd="36dp"
         app:boxStrokeWidth="0dp"
-        app:endIconMode="password_toggle">
+        app:endIconMode="password_toggle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tips">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/TextInputEditText"
+            android:id="@+id/textInputEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/please_input_unionid"
             android:inputType="textPassword" />
 
     </com.google.android.material.textfield.TextInputLayout>
-
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/confirm_button"
@@ -61,14 +82,8 @@
         android:layout_marginStart="36dp"
         android:layout_marginTop="36dp"
         android:layout_marginEnd="36dp"
-        android:text="@string/confirm" />
-
-    <TextView
-        android:id="@+id/tips"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="36dp" />
-
-</LinearLayout>
+        android:text="@string/confirm"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/TextInputLayout" />
+</androidx.constraintlayout.widget.ConstraintLayout>
