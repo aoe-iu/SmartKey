@@ -18,6 +18,9 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 11.0
+     # update sdk   
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v2
     # 获取打包秘钥
     - name: Checkout Android Keystore
       uses: actions/checkout@v2
